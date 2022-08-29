@@ -1,0 +1,63 @@
+version: "3.8"
+networks:
+  main:
+    driver: bridge
+
+services:
+  nge_nginx:
+    container_name: nge_nginx
+    image: nginx:alpine
+    networks:
+      - main
+    ports:
+      - 8888:80
+    volumes:
+      - "./config/default.conf:/etc/nginx/conf.d/default.conf"
+    depends_on:
+      - nge_web
+
+  nge_web:
+    container_name: nge_web
+    build:
+      context: ./src
+      dockerfile: node.dockerfile
+    command: nodemon ./bin/www
+    ports:
+      - 5001:5001
+    networks:
+      - main
+    depends_on:
+      - nge_db
+    volumes:
+      - ./src:/app
+    env_file:
+      - ./src/.env
+  
+  nge_db:
+    image: mariadb:latest
+    ports:
+      - 3306:3306
+    networks:
+      - main
+    volumes:
+      - "nge_db_data:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: nge
+      MYSQL_USER: nge
+      MYSQL_PASSWORD: ngepw
+
+  nge_redis:
+    container_name: nge_redis
+    image: redis:3.2-alpine
+    networks:
+      - main
+    command: --port 6379
+    ports:
+      - 6379:6379
+    expose:
+      - 6379
+
+volumes:
+  nge_db_data:
+    driver: local

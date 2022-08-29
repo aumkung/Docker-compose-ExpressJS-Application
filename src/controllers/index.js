@@ -1,0 +1,1 @@
+module.exports.UserResourceController = require('./UserResourceController')
