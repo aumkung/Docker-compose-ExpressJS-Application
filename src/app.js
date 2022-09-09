@@ -7,6 +7,7 @@ const redis = require('ioredis');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const { sequelize } = require('./models');
 
 const app = express();
 
@@ -19,6 +20,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
+async function isDBConnected() {
+    try {
+      console.log('Connection DB...');
+      await sequelize.authenticate();
+      console.log('Connection has been established successfully.');
+      return true;
+    } catch (error) {
+      console.error('Unable to connect to the database:', error);
+      return false;
+    }
+  }
 
 function isRedisConnected() {
     const client = redis.createClient({
@@ -32,6 +44,8 @@ function isRedisConnected() {
 }
 
 isRedisConnected();
+
+isDBConnected()
 
 
 module.exports = app;

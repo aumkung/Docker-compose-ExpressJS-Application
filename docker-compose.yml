@@ -21,7 +21,7 @@ services:
     build:
       context: ./src
       dockerfile: node.dockerfile
-    command: nodemon ./bin/www
+    command: npm run dev
     ports:
       - 5001:5001
     networks:
