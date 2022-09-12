@@ -30,7 +30,7 @@ async function isDBConnected() {
       console.error('Unable to connect to the database:', error);
       return false;
     }
-  }
+}
 
 function isRedisConnected() {
     const client = redis.createClient({
