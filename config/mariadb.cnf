@@ -1,0 +1,2 @@
+[mariadb]
+default_time_zone = 'Asia/Bangkok'

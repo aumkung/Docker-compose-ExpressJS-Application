@@ -34,6 +34,7 @@ services:
       - ./src/.env
   
   nge_db:
+    container_name: nge_db
     image: mariadb:latest
     ports:
       - 3306:3306
@@ -41,6 +42,7 @@ services:
       - main
     volumes:
       - "nge_db_data:/var/lib/mysql"
+      - "./config/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf"
     environment:
       MYSQL_ROOT_PASSWORD: rootpw
       MYSQL_DATABASE: nge

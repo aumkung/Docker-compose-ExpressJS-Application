@@ -18,10 +18,6 @@ module.exports = {
             collate: 'utf8_unicode_ci',
             createdAt: 'created_at',
             updatedAt: 'updated_at',
-        },
-        timezone: process.env.DB_TIMEZONE,
-        dialectOptions: {
-            timezone: process.env.DB_TIMEZONE,
-        },
+        }
     }
 };
