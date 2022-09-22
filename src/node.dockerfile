@@ -26,5 +26,6 @@ ENV PORT 5001
 ENV NODE_ENV development
 
 EXPOSE 5001
+EXPOSE 9229
 
-CMD ["node", "./bin/www"]
+CMD ["nodemon", "--inspect=0.0.0.0", "./bin/www"]
